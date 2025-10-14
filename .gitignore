@@ -33,3 +33,5 @@ x86/
 *.VC.db
 *.VC.VC.opendb
 ipch/
+
+.vscode/
