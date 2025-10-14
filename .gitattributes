@@ -1,0 +1,42 @@
+# normalize line endings
+* text=auto
+
+# use LF for C/C++ sources
+*.c     text eol=lf
+*.cpp   text eol=lf
+*.h     text eol=lf
+*.hpp   text eol=lf
+*.inl   text eol=lf
+
+# Visual Studio solution/project as binary (avoid broken merges)
+*.sln       -text merge=binary
+*.vcxproj   -text merge=binary
+*.vcproj    -text merge=binary
+
+# common build outputs (always binary)
+*.exe   binary
+*.dll   binary
+*.lib   binary
+*.exp   binary
+*.pdb   binary
+*.obj   binary
+*.iobj  binary
+*.ipdb  binary
+*.ilk   binary
+
+# assets
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+
+# archives
+*.zip   binary
+*.7z    binary
+*.rar   binary
+
+# Windows scripts keep CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf

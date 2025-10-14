@@ -1,0 +1,28 @@
+BasedOnStyle: Chromium
+Language: Cpp
+
+# layout
+ColumnLimit: 120
+MaxEmptyLinesToKeep: 3
+
+# intend and tab
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 8
+
+# braces
+BreakBeforeBraces: Linux
+AllowShortIfStatementsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# switch case
+IndentCaseLabels: false
+AccessModifierOffset: -4
+
+# space and pointer
+SpaceBeforeParens: ControlStatementsExceptForEachMacros
+SpaceAfterCStyleCast: true
+DerivePointerAlignment: false
+PointerAlignment: Right

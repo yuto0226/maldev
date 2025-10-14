@@ -1,0 +1,35 @@
+# Visual Studio workspace cache
+.vs/
+
+# User-specific files
+*.user
+*.filters
+
+# Build output
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# Compiled objects and debug info
+*.obj
+*.pdb
+*.idb
+*.ipdb
+*.iobj
+*.ilk
+*.pch
+*.exe
+*.dll
+*.lib
+*.exp
+*.log
+
+# Intermediate / cache
+*.sdf
+*.opendb
+*.VC.db
+*.VC.VC.opendb
+ipch/
