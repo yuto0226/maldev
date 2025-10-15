@@ -85,7 +85,8 @@ int main(int argc, char *argv[])
     NtQueryInformationProcess(hProcess, ProcessBasicInformation, &pbi, sizeof(pbi), NULL);
 
     std::cout << "[i] PebBaseAddress @ 0x" << std::hex << pbi.PebBaseAddress << std::endl;
-    std::cout << "[i] UniqueProcessId: " << pbi.UniqueProcessId << std::endl;
+    std::cout << "[i] UniqueProcessId: " << std::dec << static_cast<unsigned long long>(pbi.UniqueProcessId) << std::endl;
+    std::cout << "[i] InheritedFromUniqueProcessId: " << std::dec << static_cast<unsigned long long>(reinterpret_cast<uintptr_t>(pbi.Reserved3)) << std::endl;
 
     PEB peb = {0};
 
@@ -96,7 +97,33 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    std::cout << "[i] ImageBaseAddress @ 0x" << std::hex << peb.Reserved3[1] << std::endl;
     std::cout << "[i] BeingDebugged: " << (peb.BeingDebugged ? "true" : "false") << std::endl;
+
+    IMAGE_DOS_HEADER dos = {0};
+    if (!ReadProcessMemory(hProcess, peb.Reserved3[1], &dos, sizeof(dos), nullptr)) {
+        std::cout << "[-] unable read peb.ImageBaseAddress, err=" << GetLastError() << std::endl;
+        CloseHandle(hProcess);
+        CloseHandle(ntdll);
+        exit(EXIT_FAILURE);
+    }
+
+    if(dos.e_magic == 0x5a4d) {
+        std::cout <<"[+] DOS header is succfully access" << std::endl;
+    }
+
+    IMAGE_NT_HEADERS nt = {0};
+    BYTE* nt_headers_addr = (BYTE*)peb.Reserved3[1] + dos.e_lfanew;
+    if (!ReadProcessMemory(hProcess, nt_headers_addr, &nt, sizeof(nt), nullptr)) {
+        std::cout << "[-] unable read peb.ImageBaseAddress, err=" << GetLastError() << std::endl;
+        CloseHandle(hProcess);
+        CloseHandle(ntdll);
+        exit(EXIT_FAILURE);
+    }
+
+    if(nt.Signature == 0x4550) {
+        std::cout <<"[+] NT header is succfully access" << std::endl;
+    }
 
     RTL_USER_PROCESS_PARAMETERS param = {0};
     if (!ReadProcessMemory(hProcess, peb.ProcessParameters, &param, sizeof(param), nullptr)) {
